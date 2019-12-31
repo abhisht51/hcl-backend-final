@@ -28,7 +28,7 @@ def sendtoDb(request):
     #     t2 = actual[i]
     #     t3 = difference[i]
 
-        # p = tower(predicted_Usage=t1,actual_Usage=t2,difference=t3)
+    #     p = tower(predicted_Usage=t1,actual_Usage=t2,difference=t3)
         # p = tower(actual_Usage = actual[i])
         # p = tower(difference = difference[i])
 
