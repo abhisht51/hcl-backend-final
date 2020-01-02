@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
-import json 
-from realtime.actualbrain import actualData,plot2y,actual_Data,plot1y,plot4y,plot3y
+from django.http import HttpResponse, JsonResponse
+import json
+from realtime.actualbrain import actualData, plot2y, actual_Data, plot1y, plot4y, plot3y
 from realtime.models import tower
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 import numpy as np
+from realtime.serializers import tower_serializer
 
 
 # Create your views here.
@@ -15,6 +16,57 @@ import numpy as np
 def trial(request):
     return HttpResponse(len(plot1y))
 
+
+@api_view(["GET"])
+def towers_detail(request):
+    name = request.GET.get('name')
+
+    if(name == 'towerone'):
+        tower_data = tower.objects.values()[:13]
+    elif(name == 'towertwo'):
+        tower_data = tower.objects.values()[13:25]
+    elif(name == 'towerthree'):
+        tower_data = tower.objects.values()[25:37]
+    elif(name == 'towerfour'):
+        tower_data = tower.objects.values()[37:49]
+    elif(name == 'towerfive'):
+        tower_data = tower.objects.values()[49:61]
+
+
+    pred = []
+    act = [] 
+    diff = [] 
+    for i in tower_data:
+        serialize = tower_serializer(i)
+        pred.append(tofloat((serialize.data['predicted_Usage'][1:-1]).split(',')))
+        act.append(tofloat((serialize.data['actual_Usage'][1:-1]).split(',')))
+        diff.append(tofloat((serialize.data['difference'][1:-1]).split(',')))
+    pred = listwala(pred)
+    act = listwala(act)
+    diff = listwala(diff)
+
+    return JsonResponse({
+        "predicted_Usage":pred,
+        "actual_Usage":act,
+        "difference":diff
+
+
+    })
+
+def listwala(l):
+    flat_list = []
+    for sublist in l:
+        for item in sublist:
+            flat_list.append(item)
+    return flat_list
+
+def tofloat(x):
+    test_list = []
+    for i in range(1, len(x)): 
+        # if(x[i]==',' or x[i]=='.'):
+        #     continue
+        test_list.append(float(x[i]))
+    return test_list
 
 def sendtoDb(request):
     temp = toListJson(plot1y)+toListJson(plot2y) + toListJson(plot3y) + toListJson(plot4y)

@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hellofriend', views.trial ),
     path('dekho', views.kuchbhi ), 
+    path('tower/details', views.towers_detail), 
+
 
     path('getall', views.sports_events_get_name_poster ),
     #Proceed With Caution
