@@ -53,6 +53,111 @@ def towers_detail(request):
 
     })
 
+def towers_bhavya(request):
+
+    tower_data = tower.objects.values()[:61]
+    predicted_life = [] 
+    actual_life = [] 
+    difference_life = [] 
+
+    pred = []
+    act = [] 
+    diff = [] 
+    for i in tower_data:
+        serialize = tower_serializer(i)
+        for j in range(12):
+            pred.append(tofloat((serialize.data['predicted_Usage'][1:-1]).split(',')))
+            act.append(tofloat((serialize.data['actual_Usage'][1:-1]).split(',')))
+            diff.append(tofloat((serialize.data['difference'][1:-1]).split(',')))
+        pred = listwala(pred)
+        act = listwala(act)
+        diff = listwala(diff)
+        predicted_life.append(pred)
+        actual_life.append(act)
+        difference_life.append(diff)
+        pred = []
+        act = [] 
+        diff = [] 
+
+
+    return JsonResponse({
+        "predicted_Usage":[
+            {
+                "id":1,
+                "data":predicted_life[0]
+            },
+            {
+                "id":2,
+                "data":predicted_life[1]
+            }, 
+            {
+                "id":3,
+                "data":predicted_life[2]
+            }, 
+            {
+                "id":4,
+                "data":predicted_life[3]
+            }, 
+            {
+                "id":5,
+                "data":predicted_life[4]
+            },            
+
+
+        ],
+        
+        "actual_Usage":[
+            {
+                "id":1,
+                "data":actual_life[0]
+            },
+            {
+                "id":2,
+                "data":actual_life[1]
+            }, 
+            {
+                "id":3,
+                "data":actual_life[2]
+            }, 
+            {
+                "id":4,
+                "data":actual_life[3]
+            }, 
+            {
+                "id":5,
+                "data":actual_life[4]
+            },            
+
+
+        ],
+        "difference":[
+            {
+                "id":1,
+                "data":difference_life[0]
+            },
+            {
+                "id":2,
+                "data":difference_life[1]
+            }, 
+            {
+                "id":3,
+                "data":difference_life[2]
+            }, 
+            {
+                "id":4,
+                "data":difference_life[3]
+            }, 
+            {
+                "id":5,
+                "data":difference_life[4]
+            },            
+
+
+        ],
+
+
+    })
+
 def listwala(l):
     flat_list = []
     for sublist in l:
