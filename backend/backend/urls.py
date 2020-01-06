@@ -22,11 +22,8 @@ urlpatterns = [
     path('dekho', views.kuchbhi ), 
     path('tower/details', views.towers_detail), 
     path('tower/bhavya', views.towers_bhavya), 
-
-
-
     path('getall', views.sports_events_get_name_poster ),
     #Proceed With Caution
-    path('difference', views.getDifference),
-    path('sendtoDb', views.sendtoDb ), 
+    # path('difference', views.getDifference),
+    # path('sendtoDb', views.sendtoDb ), 
 ]

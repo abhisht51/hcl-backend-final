@@ -155,7 +155,6 @@ def towers_bhavya(request):
 
         ],
 
-
     })
 
 def listwala(l):
@@ -170,7 +169,8 @@ def tofloat(x):
     for i in range(1, len(x)): 
         # if(x[i]==',' or x[i]=='.'):
         #     continue
-        test_list.append(float(x[i]))
+        
+        test_list.append(abs(round(float(x[i]),2)))
     return test_list
 
 def sendtoDb(request):
