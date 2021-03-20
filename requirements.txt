@@ -2,7 +2,7 @@ asgiref==3.2.3
 autopep8==1.4.4
 Django==3.1.6
 django-rest-framework==0.1.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 numpy==1.17.4
 pycodestyle==2.5.0
 pytz==2019.3
